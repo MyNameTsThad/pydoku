@@ -66,7 +66,7 @@ def displayCredits():
     print("")
     print("A version of the classic puzzle game Sudoku made in Python! (Made in 3 days)")
     print("by IWant2TryHard (https://github.com/MyNameTsThad)")
-    print("for his 8th-9th grade Computer Science class (i guess???)")
+    print("for his 8th grade Computer Science class (i guess???)")
 
     input("Continue: ")
     mainMenu()
@@ -128,7 +128,7 @@ def prepareGame():
 
             try:
                 diffNum = int(difficulty)
-                if diffNum > 1000 or diffNum < 1:
+                if diffNum > 5 or diffNum < 1:
                     print("\033[31mInvalid option! Please try again.\033[0m")
                     prepareGame()
                 else:
@@ -150,11 +150,12 @@ def prepareGame():
         print("    [\033[34m2\033[0m] Normal")
         print("    [\033[32m3\033[0m] Hard")
         print("    [\033[33m4\033[0m] Random difficulty")
+        print("    [\033[36m5\033[0m] Back")
         difficulty = input("Option: ")
 
         try:
             diffNum = int(difficulty)
-            if diffNum > 1000 or diffNum < 1:
+            if diffNum > 5 or diffNum < 1:
                 print("\033[31mInvalid option! Please try again.\033[0m")
                 prepareGame()
             else:
