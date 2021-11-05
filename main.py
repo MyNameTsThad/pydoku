@@ -697,5 +697,6 @@ def printBoard():
           "\033[34my\033[0m")
 
 
-if __name__ == '__main__':
-    mainMenu()
+# if __name__ == '__main__':
+# remove the comments and indent as necessary
+mainMenu()
