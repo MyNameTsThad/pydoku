@@ -99,10 +99,12 @@ def prepareGame():
             print("    [\033[34m2\033[0m] Normal")
             print("    [\033[32m3\033[0m] Hard")
             print("    [\033[33m4\033[0m] Random difficulty")
+            print("    [\033[36m5\033[0m] Back")
             difficulty = input("Option: ")
+
             try:
                 diffNum = int(difficulty)
-                if diffNum > 4 or diffNum < 1:
+                if diffNum > 5 or diffNum < 1:
                     print("\033[31mInvalid option! Please try again.\033[0m")
                     prepareGame()
                 else:
@@ -198,6 +200,11 @@ def mainGameLoop(isCallback=False):
     rawInput = askInput()
     # check command integrity
     inputArr = list(rawInput)
+
+    if rawInput == "board":
+        printBoard()
+        mainGameLoop(True)
+
     while not (inputArr[0] == '[' and inputArr[2] == ',' and inputArr[4] == ']' and inputArr[6] == '-'
                and inputArr[7] == '>' and inputArr[1].isnumeric() and inputArr[3].isnumeric()
                and inputArr[9].isnumeric()):
@@ -385,35 +392,34 @@ def checkIntegrity(board, x, y, num):
         print("checkIntegrity()")
         if advancedDebugOutput:
             print(f"===========-+ Advanced Debug Output (checkIntegrity({board}, {x}, {y}, {num})) +-===========")
-        else:
-            print(f"===========-+ Debug Output (checkIntegrity()) +-===========")
     newBoard = board
+    prev = newBoard[y - 1][x - 1]
     newBoard[y - 1][x - 1] = num
     repeats = 0
     # x axis (horizontal)
     for aItem in range(len(newBoard[y - 1])):
         a = newBoard[y - 1][aItem]
-        if debugOutput:
+        if debugOutput and advancedDebugOutput:
             if advancedDebugOutput:
                 print(
                     f"checking item with coordinates [{aItem},{y - 1}] with {newBoard[y - 1][x - 1]} [{x - 1},{y - 1}]")
 
         if a == newBoard[y - 1][x - 1]:
             repeats += 1
-            if debugOutput:
+            if debugOutput and advancedDebugOutput:
                 print(f"item with coordinates [{aItem},{y - 1}] is a repeat, repeats is now {repeats}")
 
     # y axis (vertical)
     for bItem in range(len(newBoard)):
         b = newBoard[bItem]
-        if debugOutput:
+        if debugOutput and advancedDebugOutput:
             if advancedDebugOutput:
                 print(
                     f"checking item with coordinates [{x - 1},{bItem}] with {newBoard[y - 1][x - 1]} [{x - 1},{y - 1}]")
 
         if b[x - 1] == newBoard[y - 1][x - 1]:
             repeats += 1
-            if debugOutput:
+            if debugOutput and advancedDebugOutput:
                 print(f"item with coordinates [{x - 1},{bItem}] is a repeat, repeats is now {repeats}")
 
     # cell block check
@@ -424,14 +430,14 @@ def checkIntegrity(board, x, y, num):
                          newBoard[y + 1][x - 1], newBoard[y + 1][x], newBoard[y + 1][x + 1]]
             for cItem in range(len(cellBlock)):
                 c = cellBlock[cItem]
-                if debugOutput:
+                if debugOutput and advancedDebugOutput:
                     if advancedDebugOutput:
                         print(
                             f"checking item {cItem} within cellgroup with {newBoard[y - 1][x - 1]} [{x - 1},{y - 1}]")
 
                 if c == newBoard[y - 1][x - 1]:
                     repeats += 1
-                    if debugOutput:
+                    if debugOutput and advancedDebugOutput:
                         print(f"item {cItem} within cellgroup is a repeat, repeats is now {repeats}")
         elif y == 2 or y == 5 or y == 8:
             cellBlock = [newBoard[y - 2][x - 1], newBoard[y - 2][x], newBoard[y - 2][x + 1],
@@ -439,14 +445,14 @@ def checkIntegrity(board, x, y, num):
                          newBoard[y][x - 1], newBoard[y][x], newBoard[y][x + 1]]
             for cItem in range(len(cellBlock)):
                 c = cellBlock[cItem]
-                if debugOutput:
+                if debugOutput and advancedDebugOutput:
                     if advancedDebugOutput:
                         print(
                             f"checking item {cItem} within cellgroup with {newBoard[y - 1][x - 1]} [{x - 1},{y - 1}]")
 
                 if c == newBoard[y - 1][x - 1]:
                     repeats += 1
-                    if debugOutput:
+                    if debugOutput and advancedDebugOutput:
                         print(f"item {cItem} within cellgroup is a repeat, repeats is now {repeats}")
         elif y == 3 or y == 6 or y == 9:
             cellBlock = [newBoard[y - 3][x - 1], newBoard[y - 3][x], newBoard[y - 3][x + 1],
@@ -454,14 +460,14 @@ def checkIntegrity(board, x, y, num):
                          newBoard[y - 1][x - 1], newBoard[y - 1][x], newBoard[y - 1][x + 1]]
             for cItem in range(len(cellBlock)):
                 c = cellBlock[cItem]
-                if debugOutput:
+                if debugOutput and advancedDebugOutput:
                     if advancedDebugOutput:
                         print(
                             f"checking item {cItem} within cellgroup with {newBoard[y - 1][x - 1]} [{x - 1},{y - 1}]")
 
                 if c == newBoard[y - 1][x - 1]:
                     repeats += 1
-                    if debugOutput:
+                    if debugOutput and advancedDebugOutput:
                         print(f"item {cItem} within cellgroup is a repeat, repeats is now {repeats}")
     elif x == 2 or x == 5 or x == 8:
         if y == 1 or y == 4 or y == 7:
@@ -470,14 +476,14 @@ def checkIntegrity(board, x, y, num):
                          newBoard[y + 1][x - 2], newBoard[y + 1][x - 1], newBoard[y + 1][x]]
             for cItem in range(len(cellBlock)):
                 c = cellBlock[cItem]
-                if debugOutput:
+                if debugOutput and advancedDebugOutput:
                     if advancedDebugOutput:
                         print(
                             f"checking item {cItem} within cellgroup with {newBoard[y - 1][x - 1]} [{x - 1},{y - 1}]")
 
                 if c == newBoard[y - 1][x - 1]:
                     repeats += 1
-                    if debugOutput:
+                    if debugOutput and advancedDebugOutput:
                         print(f"item {cItem} within cellgroup is a repeat, repeats is now {repeats}")
         elif y == 2 or y == 5 or y == 8:
             cellBlock = [newBoard[y - 2][x - 2], newBoard[y - 2][x - 1], newBoard[y - 2][x],
@@ -485,14 +491,14 @@ def checkIntegrity(board, x, y, num):
                          newBoard[y][x - 2], newBoard[y][x - 1], newBoard[y][x]]
             for cItem in range(len(cellBlock)):
                 c = cellBlock[cItem]
-                if debugOutput:
+                if debugOutput and advancedDebugOutput:
                     if advancedDebugOutput:
                         print(
                             f"checking item {cItem} within cellgroup with {newBoard[y - 1][x - 1]} [{x - 1},{y - 1}]")
 
                 if c == newBoard[y - 1][x - 1]:
                     repeats += 1
-                    if debugOutput:
+                    if debugOutput and advancedDebugOutput:
                         print(f"item {cItem} within cellgroup is a repeat, repeats is now {repeats}")
         elif y == 3 or y == 6 or y == 9:
             cellBlock = [newBoard[y - 3][x - 2], newBoard[y - 3][x - 1], newBoard[y - 3][x],
@@ -500,14 +506,14 @@ def checkIntegrity(board, x, y, num):
                          newBoard[y - 1][x - 2], newBoard[y - 1][x - 1], newBoard[y - 1][x]]
             for cItem in range(len(cellBlock)):
                 c = cellBlock[cItem]
-                if debugOutput:
+                if debugOutput and advancedDebugOutput:
                     if advancedDebugOutput:
                         print(
                             f"checking item {cItem} within cellgroup with {newBoard[y - 1][x - 1]} [{x - 1},{y - 1}]")
 
                 if c == newBoard[y - 1][x - 1]:
                     repeats += 1
-                    if debugOutput:
+                    if debugOutput and advancedDebugOutput:
                         print(f"item {cItem} within cellgroup is a repeat, repeats is now {repeats}")
     elif x == 3 or x == 6 or x == 9:
         if y == 1 or y == 4 or y == 7:
@@ -516,14 +522,14 @@ def checkIntegrity(board, x, y, num):
                          newBoard[y + 1][x - 3], newBoard[y + 1][x - 2], newBoard[y + 1][x - 1]]
             for cItem in range(len(cellBlock)):
                 c = cellBlock[cItem]
-                if debugOutput:
+                if debugOutput and advancedDebugOutput:
                     if advancedDebugOutput:
                         print(
                             f"checking item {cItem} within cellgroup with {newBoard[y - 1][x - 1]} [{x - 1},{y - 1}]")
 
                 if c == newBoard[y - 1][x - 1]:
                     repeats += 1
-                    if debugOutput:
+                    if debugOutput and advancedDebugOutput:
                         print(f"item {cItem} within cellgroup is a repeat, repeats is now {repeats}")
         elif y == 2 or y == 5 or y == 8:
             cellBlock = [newBoard[y - 2][x - 3], newBoard[y - 2][x - 2], newBoard[y - 2][x - 1],
@@ -531,14 +537,14 @@ def checkIntegrity(board, x, y, num):
                          newBoard[y][x - 3], newBoard[y][x - 2], newBoard[y][x - 1]]
             for cItem in range(len(cellBlock)):
                 c = cellBlock[cItem]
-                if debugOutput:
+                if debugOutput and advancedDebugOutput:
                     if advancedDebugOutput:
                         print(
                             f"checking item {cItem} within cellgroup with {newBoard[y - 1][x - 1]} [{x - 1},{y - 1}]")
 
                 if c == newBoard[y - 1][x - 1]:
                     repeats += 1
-                    if debugOutput:
+                    if debugOutput and advancedDebugOutput:
                         print(f"item {cItem} within cellgroup is a repeat, repeats is now {repeats}")
         elif y == 3 or y == 6 or y == 9:
             cellBlock = [newBoard[y - 3][x - 3], newBoard[y - 3][x - 2], newBoard[y - 3][x - 1],
@@ -546,24 +552,25 @@ def checkIntegrity(board, x, y, num):
                          newBoard[y - 1][x - 3], newBoard[y - 1][x - 2], newBoard[y - 1][x - 1]]
             for cItem in range(len(cellBlock)):
                 c = cellBlock[cItem]
-                if debugOutput:
+                if debugOutput and advancedDebugOutput:
                     if advancedDebugOutput:
                         print(
                             f"checking item {cItem} within cellgroup with {newBoard[y - 1][x - 1]} [{x - 1},{y - 1}]")
 
                 if c == newBoard[y - 1][x - 1]:
                     repeats += 1
-                    if debugOutput:
+                    if debugOutput and advancedDebugOutput:
                         print(f"item {cItem} within cellgroup is a repeat, repeats is now {repeats}")
 
     # final check
     if repeats <= 3:
-        if debugOutput:
+        if debugOutput and advancedDebugOutput:
             print(f"repeats is {repeats}, Integrity check passed")
         return True
     else:
-        if debugOutput:
+        if debugOutput and advancedDebugOutput:
             print(f"repeats is {repeats}, Integrity check failed")
+        newBoard[y - 1][x - 1] = prev
         return False
 
 
@@ -584,19 +591,27 @@ def checkBoardIntegrity(board):
 
     if isStillValid > 0:
         if isFilled:
+            if debugOutput:
+                print("checkBoardIntegrity() = 3")
             return 3
         else:
+            if debugOutput:
+                print("checkBoardIntegrity() = 2")
             return 2
     else:
         if isFilled:
+            if debugOutput:
+                print("checkBoardIntegrity() = 1")
             return 1
         else:
+            if debugOutput:
+                print("checkBoardIntegrity() = 0")
             return 0
 
 
 def forceInsertIntoBoard(x, y, num):
     global gameBoard
-
+    global debugOutput
     if debugOutput:
         print("forceInsertIntoBoard()")
     if num == 0:
@@ -697,5 +712,4 @@ def printBoard():
           "\033[34my\033[0m")
 
 
-if __name__ == '__main__':
-    mainMenu()
+mainMenu()
