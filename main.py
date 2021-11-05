@@ -566,6 +566,7 @@ def checkIntegrity(board, x, y, num):
     if repeats <= 3:
         if debugOutput and advancedDebugOutput:
             print(f"repeats is {repeats}, Integrity check passed")
+        newBoard[y - 1][x - 1] = prev
         return True
     else:
         if debugOutput and advancedDebugOutput:
