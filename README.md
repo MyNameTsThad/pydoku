@@ -11,7 +11,7 @@
 A version of the classic puzzle game Sudoku made in Python! (Made in 3 days)\
 for my 8th grade Computer Science class (i guess???)
 
-Also no .exe, pyinstall broke ;-;
+Also no .exe, pyinstall broke ;-; (jokes on you i use linux now)
 
 Links:\
 [Text to ASCII Art Generator](https://patorjk.com/software/taag/)\
