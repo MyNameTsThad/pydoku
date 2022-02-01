@@ -219,7 +219,7 @@ def mainGameLoop(isCallback=False):
             print(inputArr[3].isnumeric())
             print(inputArr[9].isnumeric())
         print("\033[31mInvalid Command! Please try again.\033[0m")
-        rawInput = askInput()
+        mainGameLoop(True)
 
     posX = int(inputArr[1])
     posY = int(inputArr[3])
